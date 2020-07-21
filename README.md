@@ -2,8 +2,8 @@
 
 ## Pour commencer
 
-La documentation officielle: https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene
-Pour l'extension three.bas: https://github.com/zadvorsky/three.bas
+- La documentation officielle: https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene
+- Pour l'extension three.bas: https://github.com/zadvorsky/three.bas
 
 ### Pré-requis
 
