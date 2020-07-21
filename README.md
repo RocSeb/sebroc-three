@@ -1,5 +1,8 @@
 # sebroc-three
 
+### Prévisualisation du projet
+[![Voir la Vidéo](https://i9.ytimg.com/vi/YVcLqgLJKQo/mq2.jpg?sqp=COCe2_gF&rs=AOn4CLCykjtihCg0j1A3DwApap4l3JNRwg)](https://youtu.be/YVcLqgLJKQo)
+
 ## Pour commencer
 
 - La documentation officielle: https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene
