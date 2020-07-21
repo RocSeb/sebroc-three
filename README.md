@@ -12,8 +12,6 @@
 
 ## Fabriqué avec
 
-Entrez les programmes/logiciels/ressources que vous avez utilisé pour développer votre projet
-
 * [three.bas](https://github.com/zadvorsky/three.bas) - Extension à three.js
 * [three.js](https://threejs.org) 
 * [visual studio code](https://code.visualstudio.com) - Editeur de textes
