@@ -4,7 +4,7 @@ var mControls;
 
 var mScene;
 
-var mParticleCount = 100000; // <-- nombres de particules, plus le chiffre est grand plus les performances seront réduites
+var mParticleCount = 50000; // <-- change this number!
 var mParticleSystem;
 
 var mTime = 0.0;
@@ -53,7 +53,7 @@ function initParticleSystem() {
 
   bufferGeometry.computeVertexNormals();
 
-  // genere les donnees geometrique
+  // generate additional geometry data
   var aOffset = bufferGeometry.createAttribute('aOffset', 1);
   var aStartPosition = bufferGeometry.createAttribute('aStartPosition', 3);
   var aControlPoint1 = bufferGeometry.createAttribute('aControlPoint1', 3);
@@ -170,7 +170,7 @@ function initParticleSystem() {
 
 
   var material = new THREE.BAS.PhongAnimationMaterial(
-    // parametres custom & parametre de THREE.MeshPhongMaterial
+    // custom parameters & THREE.MeshPhongMaterial parameters
     {
       vertexColors: THREE.VertexColors,
       shading: THREE.FlatShading,
@@ -207,7 +207,7 @@ function initParticleSystem() {
         'transformed += cubicBezier(aStartPosition, aControlPoint1, aControlPoint2, aEndPosition, tProgress);'
       ]
     },
-    // THREE.MeshPhongMaterial
+    // THREE.MeshPhongMaterial uniforms
     {
       specular: 0xff0000,
       shininess: 20
@@ -215,8 +215,8 @@ function initParticleSystem() {
   );
 
   mParticleSystem = new THREE.Mesh(bufferGeometry, material);
-  // la boîte englobante du systeme de particules ne reflete pas sa taille a l'ecran
-  // cette valeur doit etre definit sur false pour empecher le tout de disparaitres sous certains angles
+  // because the bounding box of the particle system does not reflect its on-screen size
+  // set this to false to prevent the whole thing from disappearing on certain angles
   mParticleSystem.frustumCulled = false;
 
   mScene.add(mParticleSystem);
@@ -321,6 +321,7 @@ THREE.BAS.PrefabBufferGeometry.prototype.bufferDefaults = function () {
   }
 };
 
+// todo test
 THREE.BAS.PrefabBufferGeometry.prototype.bufferUvs = function() {
   var prefabFaceCount = this.prefabGeometry.faces.length;
   var prefabVertexCount = this.prefabVertexCount = this.prefabGeometry.vertices.length;
@@ -348,8 +349,8 @@ THREE.BAS.PrefabBufferGeometry.prototype.bufferUvs = function() {
 };
 
 /**
- * base sur BufferGeometry.computeVertexNormals
- * calcul des sommets pour un prefabrique et repeter les donnees dans le tampon normal
+ * based on BufferGeometry.computeVertexNormals
+ * calculate vertex normals for a prefab, and repeat the data in the normal buffer
  */
 THREE.BAS.PrefabBufferGeometry.prototype.computeVertexNormals = function () {
   var index = this.index;
@@ -486,6 +487,7 @@ THREE.BAS.BaseAnimationMaterial = function(parameters) {
 THREE.BAS.BaseAnimationMaterial.prototype = Object.create(THREE.ShaderMaterial.prototype);
 THREE.BAS.BaseAnimationMaterial.prototype.constructor = THREE.BAS.BaseAnimationMaterial;
 
+// abstract
 THREE.BAS.BaseAnimationMaterial.prototype._concatVertexShader = function() {
     return '';
 };
@@ -513,6 +515,7 @@ THREE.BAS.BaseAnimationMaterial.prototype.setUniformValues = function(values) {
             var uniform = this.uniforms[key];
             var value = values[key];
 
+            // todo add matrix uniform types
             switch (uniform.type) {
                 case 'c': // color
                     uniform.value.set(value);
@@ -540,6 +543,7 @@ THREE.BAS.PhongAnimationMaterial = function(parameters, uniformValues) {
     this.vertexShader = this._concatVertexShader();
     this.fragmentShader = phongShader.fragmentShader;
 
+    // todo add missing default defines
     uniformValues.map && (this.defines['USE_MAP'] = '');
     uniformValues.normalMap && (this.defines['USE_NORMALMAP'] = '');
 
@@ -549,7 +553,7 @@ THREE.BAS.PhongAnimationMaterial.prototype = Object.create(THREE.BAS.BaseAnimati
 THREE.BAS.PhongAnimationMaterial.prototype.constructor = THREE.BAS.PhongAnimationMaterial;
 
 THREE.BAS.PhongAnimationMaterial.prototype._concatVertexShader = function() {
-    // base sur THREE.ShaderLib.phong
+    // based on THREE.ShaderLib.phong
     return [
         "#define PHONG",
 
@@ -593,7 +597,7 @@ THREE.BAS.PhongAnimationMaterial.prototype._concatVertexShader = function() {
         THREE.ShaderChunk[ "skinnormal_vertex" ],
         THREE.ShaderChunk[ "defaultnormal_vertex" ],
 
-        "#ifndef FLAT_SHADED", 
+        "#ifndef FLAT_SHADED", // Normal computed with derivatives when FLAT_SHADED
 
         "	vNormal = normalize( transformedNormal );",
 
