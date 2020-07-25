@@ -22,7 +22,7 @@
 ### Update du 25/07/2020:
 - Modification du bouton Entrer en ajoutant l'url du dépo github.
 - Réduction du nombre de particules pour une meilleure accessibilité graphique.
-- Possibilité de zoomer/dézoomer et tourner la caméra à 360° sur les axe X et Y.
+- Possibilité de zoomer/dézoomer et tourner la caméra à 360° sur les axes X et Y.
 
 
 
